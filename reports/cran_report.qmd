@@ -1,0 +1,51 @@
+---
+title: "CRAN Counts"
+author: "Stephen Kaluzny"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+format:
+  html:
+    self-contained: true
+---
+
+```{r setup}
+library("ggplot2")
+```
+
+# Data
+```{r data}
+d <- read.csv(here::here("data", "cran_pkg_count.csv"))
+d[["date"]] <- as.Date(d[["date"]])
+last_date <- d[nrow(d), "date"]
+last_npkg <- d[nrow(d), "npkg"]
+indx_max_drop <- max(which(d[["ndrop"]] == max(d[["ndrop"]], na.rm=TRUE)))
+indx_max_new <- max(which(d[["nnew"]] == max(d[["nnew"]], na.rm=TRUE)))
+```
+
+We have data for `r nrow(d)` days.
+
+Package count as of `r d[nrow(d), "date"]` is `r d[nrow(d), "npkg"]`.
+
+Most packages added, `r d[indx_max_new, "nnew"]`, on `r d[indx_max_new, "date"]`.
+
+Most packages removed, `r d[indx_max_drop, "ndrop"]`, on `r d[indx_max_drop, "date"]`. 
+
+```{r total_pkg}
+d |> ggplot(aes(x=date, y=npkg)) +
+  geom_point() +
+  ggtitle("Packages on CRAN") +
+  ylab("Number of Packages")
+```
+
+```{r new_pkg}
+d |> ggplot(aes(x=date, y=nnew)) +
+  geom_point(na.rm=TRUE) +
+  ggtitle("Packages Added on CRAN") +
+  ylab("Number of New Packages")
+```
+
+```{r dropped_pkg}
+d |> ggplot(aes(x=date, y=ndrop)) +
+  geom_point(na.rm=TRUE) +
+  ggtitle("Packages Removed from CRAN") +
+  ylab("Number of Dropped Packages")
+```
