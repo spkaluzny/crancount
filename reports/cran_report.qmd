@@ -5,7 +5,12 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 format:
   html:
     self-contained: true
+    theme: none
 ---
+
+```{r cleanrmd}
+cleanrmd::use_cleanrmd("holiday")
+```
 
 ```{r setup}
 library("ggplot2")
@@ -31,7 +36,8 @@ Most packages removed, `r d[indx_max_drop, "ndrop"]`, on `r d[indx_max_drop, "da
 
 ```{r total_pkg}
 d |> ggplot(aes(x=date, y=npkg)) +
-  geom_point() +
+  geom_point(size=0.5) +
+  geom_line() +
   ggtitle("Packages on CRAN") +
   ylab("Number of Packages")
 ```
@@ -39,6 +45,7 @@ d |> ggplot(aes(x=date, y=npkg)) +
 ```{r new_pkg}
 d |> ggplot(aes(x=date, y=nnew)) +
   geom_point(na.rm=TRUE) +
+  geom_segment(aes(x=date, xend=date, y=0, yend=nnew)) +
   ggtitle("Packages Added on CRAN") +
   ylab("Number of New Packages")
 ```
@@ -46,6 +53,7 @@ d |> ggplot(aes(x=date, y=nnew)) +
 ```{r dropped_pkg}
 d |> ggplot(aes(x=date, y=ndrop)) +
   geom_point(na.rm=TRUE) +
+  geom_segment(aes(x=date, xend=date, y=0, yend=ndrop), na.rm=TRUE) +
   ggtitle("Packages Removed from CRAN") +
   ylab("Number of Dropped Packages")
 ```
