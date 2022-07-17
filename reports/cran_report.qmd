@@ -9,7 +9,10 @@ format:
 ---
 
 ```{r cleanrmd}
-cleanrmd::use_cleanrmd("holiday")
+# cleanrmd::use_cleanrmd("holiday")
+# cleanrmd::use_cleanrmd("axist")
+# cleanrmd::use_cleanrmd("water")
+cleanrmd::use_cleanrmd("sakura")
 ```
 
 ```{r setup}
