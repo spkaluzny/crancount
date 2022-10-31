@@ -8,7 +8,7 @@ format:
     theme: none
 ---
 
-```{r cleanrmd}
+```{r cleanrmd, echo=FALSE}
 # cleanrmd::use_cleanrmd("holiday")
 # cleanrmd::use_cleanrmd("axist")
 # cleanrmd::use_cleanrmd("water")
@@ -27,9 +27,14 @@ last_date <- d[nrow(d), "date"]
 last_npkg <- d[nrow(d), "npkg"]
 indx_max_drop <- max(which(d[["ndrop"]] == max(d[["ndrop"]], na.rm=TRUE)))
 indx_max_new <- max(which(d[["nnew"]] == max(d[["nnew"]], na.rm=TRUE)))
+n <- nrow(d)
 ```
 
-We have data for `r nrow(d)` days.
+We have data for `r n` days.
+
+On `r d[n, "date"]`,
+`r d[n, "nnew"]` packages were added,
+`r d[n, "ndrop"]` packages were removed.
 
 Package count as of `r d[nrow(d), "date"]` is `r d[nrow(d), "npkg"]`.
 
